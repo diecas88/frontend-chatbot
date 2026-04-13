@@ -1,5 +1,7 @@
 import ENV from "../config/env";
 
+console.log("URL final:", ENV.API_URL);
+
 export const sendQueryToLambda = async (text) => {
   const response = await fetch(ENV.API_URL, {
     method: "POST",
