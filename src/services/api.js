@@ -1,9 +1,9 @@
-import ENV from "../config/env";
+const API_URL = process.env.REACT_APP_API_URL;
 
 console.log("URL final:", ENV.API_URL);
 
 export const sendQueryToLambda = async (text) => {
-  const response = await fetch(ENV.API_URL, {
+  const response = await fetch(process.env.REACT_APP_API_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
