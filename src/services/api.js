@@ -37,6 +37,10 @@ export const sendQueryToLambda = async (text) => {
       return "Esto es dato histórico, " + lambdaResponse.data;
     }
 
+    if (lambdaResponse.type === "INTERVENED") {
+      return lambdaResponse.data;
+    }
+
     return "No response";
 
   } catch (e) {
