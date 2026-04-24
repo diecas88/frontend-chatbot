@@ -46,6 +46,7 @@ export default function ChatWidget() {
 
   return (
     <>
+      <div className="chat-widget-container">
       {/* Botón flotante */}
       <button
         onClick={() => setOpen(!open)}
@@ -60,7 +61,7 @@ export default function ChatWidget() {
           
           {/* Header */}
           <div className="flex justify-between items-center p-3 bg-gray-100 border-b">
-            <span className="font-semibold">🤖 RAG Assistant</span>
+            <span className="font-semibold">🤖 ChatBot Mundialista ⚽</span>
             <button
               onClick={() => setOpen(false)}
               className="text-gray-500 hover:text-black"
@@ -76,6 +77,7 @@ export default function ChatWidget() {
 
         </div>
       )}
+      </div>
     </>
   );
 }
