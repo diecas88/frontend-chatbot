@@ -6,3 +6,8 @@ body {
   margin: 0;
   font-family: system-ui, -apple-system, sans-serif;
 }
+
+.chat-widget-container {
+  all: initial;
+  font-family: Arial, sans-serif;
+}
