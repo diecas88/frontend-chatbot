@@ -1,134 +1,100 @@
-# Frontend Chatbot
+# Chatbot Frontend (React + AWS Amplify)
 
-Este proyecto es el frontend de un chatbot desarrollado con React. Proporciona una interfaz de usuario interactiva para que los usuarios puedan comunicarse con un backend de chatbot, que se espera que sea una función AWS Lambda.
+## Descripción
+Este proyecto corresponde al frontend de un chatbot desarrollado en **React**, desplegado en **AWS Amplify**. Proporciona una interfaz interactiva donde los usuarios pueden enviar mensajes y recibir respuestas en tiempo real.
 
-## Características
+El frontend se comunica con un backend serverless a través de **AWS API Gateway**, el cual invoca una **AWS Lambda** encargada de procesar la lógica del chatbot.
 
-*   Interfaz de chat responsiva y fácil de usar.
-*   Envío de mensajes a un servicio de backend (AWS Lambda).
-*   Visualización de respuestas del bot en tiempo real.
-*   Indicador de "Escribiendo..." mientras se espera la respuesta del bot.
-*   Manejo básico de errores para la comunicación con el backend.
+---
 
-## Tecnologías Utilizadas
+## Arquitectura General
+- **Frontend:** React (Single Page Application)
+- **Hosting:** AWS Amplify
+- **API:** AWS API Gateway
+- **Backend:** AWS Lambda
+- **Comunicación:** HTTP (REST)
 
-*   **React**: Biblioteca de JavaScript para construir interfaces de usuario.
-*   **Create React App**: Entorno para configurar aplicaciones React de una sola página.
-*   **Tailwind CSS**: Framework CSS para un estilo rápido y personalizado.
-*   **PostCSS & Autoprefixer**: Para procesar CSS.
+---
 
-## Configuración del Proyecto
+## Funcionamiento
+1. El usuario interactúa con el componente de chat.
+2. El mensaje es enviado desde el frontend al endpoint de **API Gateway**.
+3. API Gateway invoca una función **Lambda**.
+4. La Lambda procesa la solicitud (IA / lógica).
+5. Se retorna la respuesta al frontend.
+6. El mensaje se renderiza en la interfaz del chatbot.
 
-Sigue estos pasos para configurar y ejecutar el proyecto en tu entorno local.
-
-### Prerrequisitos
-
-*   Node.js (versión 14 o superior recomendada)
-*   npm o Yarn
-
-### Instalación
-
-1.  Clona el repositorio:
-    ```bash
-    git clone https://github.com/diecas88/frontend-chatbot
-    ```
-2.  Instala las dependencias:
-    ```bash
-    npm install
-    # o
-    yarn install
-    ```
-
-### Variables de Entorno
-
-Este proyecto requiere una variable de entorno para la URL del API del chatbot.
-
-1.  Crea un archivo `.env` en el directorio `frontend-chatbot/frontend-chatbot/` (al mismo nivel que `package.json`).
-2.  Agrega la siguiente variable al archivo `.env`, reemplazando `<TU_API_GATEWAY_URL>` con la URL de tu API Gateway o la URL de tu función Lambda:
-
-    ```
-    REACT_APP_API_URL=<TU_API_GATEWAY_URL>
-    ```
-
-    **Ejemplo:**
-    ```
-    REACT_APP_API_URL=https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/prod/chatbot
-    ```
-
-### Scripts Disponibles
-
-En el directorio del proyecto, puedes ejecutar:
-
-#### `npm start`
-
-Ejecuta la aplicación en modo de desarrollo.
-Abre [http://localhost:3000](http://localhost:3000) para verla en tu navegador.
-
-La página se recargará cuando realices cambios. También puedes ver cualquier error de lint en la consola.
-
-#### `npm test`
-
-Lanza el ejecutor de pruebas en modo interactivo de observación.
-Consulta la sección sobre [ejecución de pruebas](https://facebook.github.io/create-react-app/docs/running-tests) para más información.
-
-#### `npm run build`
-
-Compila la aplicación para producción en la carpeta `build`.
-Empaqueta correctamente React en modo de producción y optimiza la compilación para el mejor rendimiento.
-
-La compilación está minificada y los nombres de archivo incluyen los hashes.
-¡Tu aplicación está lista para ser desplegada!
-
-Consulta la sección sobre [despliegue](https://facebook.github.io/create-react-app/docs/deployment) para más información.
-
-#### `npm run eject`
-
-**Nota: esta es una operación unidireccional. Una vez que haces `eject`, ¡no hay vuelta atrás!**
-
-Si no estás satisfecho con las herramientas de compilación y las opciones de configuración, puedes `ejectar` en cualquier momento. Este comando eliminará la única dependencia de compilación de tu proyecto.
-
-En su lugar, copiará todos los archivos de configuración y las dependencias transitivas (webpack, Babel, ESLint, etc.) directamente en tu proyecto para que tengas control total sobre ellos. Todos los comandos excepto `eject` seguirán funcionando, pero apuntarán a los scripts copiados para que puedas ajustarlos. En este punto, estás por tu cuenta.
-
-No es necesario usar `eject`. El conjunto de características seleccionado es adecuado para implementaciones pequeñas y medianas, y no debes sentirte obligado a usar esta característica. Sin embargo, entendemos que esta herramienta no sería útil if you couldn't customize it when you are ready for it.
+---
 
 ## Estructura del Proyecto
-
-```
+```bash
 frontend-chatbot/
-├── public/
-│   └── index.html
-├── src/
-│   ├── components/
+│── build/                # Build de producción
+│── public/               # Archivos públicos
+│── src/
+│   │── components/       # Componentes del chatbot
 │   │   ├── ChatWidget.js
 │   │   ├── ChatWindow.js
 │   │   ├── InputBox.js
 │   │   └── Message.js
-│   ├── config/
-│   │   └── env.js
-│   ├── services/
-│   │   └── api.js
-│   ├── App.js
-│   ├── index.js
-│   └── ... otros archivos de React
-├── .env.example
-├── package.json
-├── package-lock.json
-├── postcss.config.js
-└── tailwind.config.js
+│   │
+│   │── config/
+│   │   └── env.js        # Configuración de variables de entorno
+│   │
+│   │── services/
+│   │   └── api.js        # Llamadas a API Gateway
+│   │
+│   │── App.js            # Componente principal
+│   │── index.js          # Punto de entrada
+│   │── widget.js         # Inicialización del widget embebible
+│
+│── .env                  # Variables de entorno
+│── .env.example          # Ejemplo de configuración
+│── package.json
+│── tailwind.config.js    # Configuración de estilos (Tailwind)
 ```
 
-### Componentes Principales
+---
 
-*   **`App.js`**: El componente principal que renderiza el `ChatWidget`.
-*   **`ChatWidget.js`**: El componente flotante del chatbot que maneja la lógica de abrir/cerrar y el estado de los mensajes.
-*   **`ChatWindow.js`**: Muestra los mensajes en el chat.
-*   **`InputBox.js`**: Componente para la entrada de texto del usuario.
-*   **`Message.js`**: Componente individual para mostrar un mensaje (del usuario o del bot).
+## Configuración
+El proyecto utiliza variables de entorno para definir la conexión con el backend:
 
-### Servicios
+```bash
+REACT_APP_API_URL=https://api.example.com
+```
 
-*   **`api.js`**: Contiene la función `sendQueryToLambda` que se encarga de realizar la solicitud HTTP a la API Gateway (o URL de Lambda) y manejar la respuesta.
+Estas variables son consumidas desde `src/config/env.js`.
+
+---
 
 ## Despliegue
+El frontend se despliega en **AWS Amplify**, lo que permite:
+- CI/CD automático desde el repositorio
+- Hosting escalable
+- HTTPS y dominio gestionado
 
-La aplicación se puede desplegar utilizando el comando `npm run build`, que crea una versión optimizada de la aplicación en la carpeta `build`. Esta carpeta puede ser servida por cualquier servidor web estático o servicio de hosting.
+---
+
+## Consideraciones Importantes
+- Actualmente, **CORS está deshabilitado o configurado de forma abierta para pruebas**.
+- Para pasar a **producción**, se debe:
+  - Habilitar correctamente **CORS en API Gateway**
+  - Restringir los orígenes permitidos
+  - Definir headers y métodos necesarios (`GET`, `POST`, etc.)
+  - Validar manejo de credenciales si aplica
+
+---
+
+## Ejecución Local
+```bash
+npm install
+npm start
+```
+
+---
+
+## Notas
+- El proyecto está diseñado como un **widget reutilizable** (`widget.js`), lo que permite integrarlo en otros sistemas.
+- La lógica de comunicación con el backend está centralizada en `services/api.js`.
+- Usa **Tailwind CSS** para estilos.
+- Puede integrarse fácilmente con servicios de IA como AWS Bedrock u otros.
