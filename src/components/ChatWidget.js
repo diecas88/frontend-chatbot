@@ -9,18 +9,18 @@ export default function ChatWidget() {
   const handleSend = async (text) => {
     if (!text.trim()) return;
 
-    // 👉 Mensaje del usuario
+    // Mensaje del usuario
     const userMessage = { role: "user", text };
     setMessages((prev) => [...prev, userMessage]);
 
-    // 👉 Mensaje temporal (loading)
+    // Mensaje temporal (loading)
     const loadingMessage = { role: "bot", text: "Escribiendo..." };
     setMessages((prev) => [...prev, loadingMessage]);
 
     try {
       const response = await sendQueryToLambda(text);
 
-      // 👉 Reemplazar el "Escribiendo..." por la respuesta real
+      //Reemplazar el "Escribiendo..." por la respuesta real
       setMessages((prev) => {
         const updated = [...prev];
         updated[updated.length - 1] = {
